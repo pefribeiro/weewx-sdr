@@ -2438,7 +2438,8 @@ class Bresser6in1Packet(Packet):
             ('rain_total', 'rain_mm')]:
             if src in obj:
                 pkt[dst] = Packet.get_float(obj, src)
-                return Bresser6in1Packet.insert_ids(pkt)
+
+        return Bresser6in1Packet.insert_ids(pkt)
 
     @staticmethod
     def insert_ids(pkt):
