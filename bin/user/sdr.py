@@ -1585,7 +1585,7 @@ class HidekiRainPacket(Packet):
 
     # {"time" : "2017-01-16 04:38:50", "model" : "HIDEKI Rain sensor", "rc" : 0, "channel" : 4, "battery" : "OK", "rain" : 2622.900}
     # {"time" : "2019-11-24 19:13:52", "model" : "HIDEKI Rain sensor", "rc" : 0, "channel" : 4, "battery" : "OK", "rain_mm" : 274.400, "mic" : "CRC"}
-    
+
     IDENTIFIER = "HIDEKI Rain sensor"
     PARSEINFO = {
         'Rolling Code': ['rolling_code', None, lambda x: int(x)],
@@ -2408,43 +2408,41 @@ class Bresser6in1Packet(Packet):
 
     @staticmethod
     def parse_json(obj):
-	pkt = dict()
-	pkt['dateTime'] = Packet.parse_time(obj.get('time'))
-	pkt['usUnits'] = weewx.METRICWX
-	pkt['station_id'] = obj.get('id')
-	if 'temperature_C' in obj:
-		pkt['temperature'] = Packet.get_float(obj, 'temperature_C')
-	if 'humidity' in obj:
-		pkt['humidity'] = Packet.get_float(obj, 'humidity')
+        pkt = dict()
+        pkt['dateTime'] = Packet.parse_time(obj.get('time'))
+        pkt['usUnits'] = weewx.METRICWX
+        pkt['station_id'] = obj.get('id')
+        if 'temperature_C' in obj:
+            pkt['temperature'] = Packet.get_float(obj, 'temperature_C')
+        if 'humidity' in obj:
+            pkt['humidity'] = Packet.get_float(obj, 'humidity')
         if 'wind_dir_deg' in obj:
-		pkt['wind_dir'] = Packet.get_float(obj, 'wind_dir_deg')
+            pkt['wind_dir'] = Packet.get_float(obj, 'wind_dir_deg')
         if 'wind_max_m_s' in obj:
-		pkt['wind_gust'] = Packet.get_float(obj, 'wind_max_m_s')
+            pkt['wind_gust'] = Packet.get_float(obj, 'wind_max_m_s')
         if 'wind_avg_m_s' in obj:
-		pkt['wind_speed'] = Packet.get_float(obj, 'wind_avg_m_s')
+            pkt['wind_speed'] = Packet.get_float(obj, 'wind_avg_m_s')
         if 'uv' in obj:
-		pkt['uv'] = Packet.get_float(obj, 'uv')
+            pkt['uv'] = Packet.get_float(obj, 'uv')
         if 'uv_index' in obj:
-		pkt['uv_index'] = Packet.get_float(obj, 'uvi')
-    	
-	#deal with different labels from rtl_433
+            pkt['uv_index'] = Packet.get_float(obj, 'uvi')
+
+        #deal with different labels from rtl_433
         for dst, src in [('wind_speed', 'wind_speed_ms'),
-                     ('gust_speed', 'gust_speed_ms'),
-                     ('rain_total', 'rainfall_mm'),
-                     ('wind_speed', 'wind_speed'),
-                     ('gust_speed', 'gust_speed'),
-                     ('rain_total', 'rain_mm')]:
-           if src in obj:
-               pkt[dst] = Packet.get_float(obj, src)
-        return Bresser6in1Packet.insert_ids(pkt)
+            ('gust_speed', 'gust_speed_ms'),
+            ('rain_total', 'rainfall_mm'),
+            ('wind_speed', 'wind_speed'),
+            ('gust_speed', 'gust_speed'),
+            ('rain_total', 'rain_mm')]:
+            if src in obj:
+                pkt[dst] = Packet.get_float(obj, src)
+                return Bresser6in1Packet.insert_ids(pkt)
 
-    @staticmethod
-    def insert_ids(pkt):
-        station_id = pkt.pop('station_id', '0000')
-        pkt = Packet.add_identifiers(pkt, station_id, Bresser6in1Packet.__name__)
-        return pkt
-
-
+        @staticmethod
+        def insert_ids(pkt):
+            station_id = pkt.pop('station_id', '0000')
+            pkt = Packet.add_identifiers(pkt, station_id, Bresser6in1Packet.__name__)
+            return pkt
 
 
 class SpringfieldTMPacket(Packet):
@@ -2474,7 +2472,7 @@ class TFATwinPlus303049Packet(Packet):
     # Temperature: 8.40 C
     # Humidity: 91 %
 
-    # {"time" : "2019-09-25 17:15:12", "model" : "TFA-Twin-Plus-30.3049", "id" : 13, "channel" : 1, "battery" : "OK", "temperature_C" : 8.400, "humidity" : 91, "mic" : "CHECK  SUM"} 
+    # {"time" : "2019-09-25 17:15:12", "model" : "TFA-Twin-Plus-30.3049", "id" : 13, "channel" : 1, "battery" : "OK", "temperature_C" : 8.400, "humidity" : 91, "mic" : "CHECK  SUM"}
 
     IDENTIFIER = "TFA-Twin-Plus-30.3049"
     PARSEINFO = {
