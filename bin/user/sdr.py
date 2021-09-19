@@ -2426,6 +2426,8 @@ class Bresser6in1Packet(Packet):
             pkt['uv'] = Packet.get_float(obj, 'uv')
         if 'uv_index' in obj:
             pkt['uv_index'] = Packet.get_float(obj, 'uvi')
+        if 'battery_ok' in obj:
+            pkt['battery'] = Packet.get_int(obj, 'battery_ok')
 
         #deal with different labels from rtl_433
         for dst, src in [('wind_speed', 'wind_speed_ms'),
