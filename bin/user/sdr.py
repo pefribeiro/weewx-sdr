@@ -2438,11 +2438,11 @@ class Bresser6in1Packet(Packet):
                 pkt[dst] = Packet.get_float(obj, src)
                 return Bresser6in1Packet.insert_ids(pkt)
 
-        @staticmethod
-        def insert_ids(pkt):
-            station_id = pkt.pop('station_id', '0000')
-            pkt = Packet.add_identifiers(pkt, station_id, Bresser6in1Packet.__name__)
-            return pkt
+    @staticmethod
+    def insert_ids(pkt):
+        station_id = pkt.pop('station_id', '0000')
+        pkt = Packet.add_identifiers(pkt, station_id, Bresser6in1Packet.__name__)
+        return pkt
 
 
 class SpringfieldTMPacket(Packet):
